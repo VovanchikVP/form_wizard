@@ -32,7 +32,9 @@ jobs:
           username: ${{ secrets.VPN_USER_NAME }}
           password: ${{ secrets.VPN_PASSWORD }}
           port: ${{ secrets.VPN_PORT }}
-          script: ls -al
+          script: | 
+            pwd
+            ls -al
 #      - name: Run command on remote server
 #        uses: D3rHase/ssh-command-action@v0.2.2
 #        with:
