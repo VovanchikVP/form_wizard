@@ -18,9 +18,9 @@ jobs:
       - run: uv pip install flake8
       - run: uv pip install pylint
       - run: uv pip install mypy
-      - run: uv run flake8
-      - run: uv run pylint
-      - run: uv run mypy
+      - run: uv run flake8 src
+      - run: uv run pylint src
+      - run: uv run mypy src
   tests:
     runs-on: ubuntu-latest
     steps:
