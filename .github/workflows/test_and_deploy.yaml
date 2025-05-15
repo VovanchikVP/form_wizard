@@ -8,18 +8,33 @@ on:
     branches:
       - '*'
 jobs:
+  flake8-lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v3
+      - name: Set up Python environment
+        uses: astral-sh/setup-uv@v5
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
+        with:
+          ignore: "F401"
+          exclude: "src/ignoreme.py"
+          max-line-length: "120"
+          path: "src"
+          plugins: "flake8-bugbear==22.1.11 flake8-black"
   tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      # Устанавливаем python нужной версии
       - name: Install uv
         uses: astral-sh/setup-uv@v5
       - run: uv sync
       - name: Run tests
         run: uv run pytest
   deploy:
-    needs: tests
+    needs: [tests, flake8-lint]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
