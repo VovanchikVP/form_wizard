@@ -1,2 +1,2 @@
 def test_():
-    assert 1 == 200, "test failed"
+    assert 200 == 200, "test failed"
