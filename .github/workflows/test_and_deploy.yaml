@@ -10,18 +10,15 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        linter: [ flake8, pylint, mypy ]
     steps:
       - name: Install uv
         uses: astral-sh/setup-uv@v5
       - run: uv install flake8
       - run: uv install pylint
       - run: uv install mypy
-      - uses: advanced-security/python-lint-code-scanning-action@v1
-        with:
-          linter: ${{ matrix.linter }}
+      - run: uv run flake8
+      - run: uv run pylint
+      - run: uv run mypy
   tests:
     runs-on: ubuntu-latest
     steps:
