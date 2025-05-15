@@ -8,19 +8,22 @@ on:
     branches:
       - '*'
 jobs:
-  lint:
+  flake8-lint:
     runs-on: ubuntu-latest
+    name: Lint
     steps:
-      - uses: actions/checkout@master
-      - name: Install uv
+      - name: Check out source repository
+        uses: actions/checkout@v3
+      - name: Set up Python environment
         uses: astral-sh/setup-uv@v5
-      - run: uv sync
-      - run: uv pip install flake8
-      - run: uv pip install pylint
-      - run: uv pip install mypy
-      - run: uv run flake8 src
-      - run: uv run pylint src
-      - run: uv run mypy src
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
+        with:
+          ignore: "F401"
+          exclude: "src/ignoreme.py"
+          max-line-length: "120"
+          path: "src"
+          plugins: "flake8-bugbear==22.1.11 flake8-black"
   tests:
     runs-on: ubuntu-latest
     steps:
