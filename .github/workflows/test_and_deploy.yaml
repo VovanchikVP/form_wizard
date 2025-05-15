@@ -30,7 +30,7 @@ jobs:
         with:
           host: ${{ secrets.VPN_HOST_IP }}
           username: ${{ secrets.VPN_USER_NAME }}
-          password: ${{ secrets.VPN_USER_NAME }}
+          password: ${{ secrets.VPN_PASSWORD }}
           port: ${{ secrets.VPN_PORT }}
           script: ls -al
 #      - name: Run command on remote server
