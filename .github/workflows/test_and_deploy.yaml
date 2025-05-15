@@ -28,7 +28,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
       - name: Install uv
         uses: astral-sh/setup-uv@v5
       - run: uv sync
