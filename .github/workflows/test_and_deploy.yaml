@@ -1,6 +1,5 @@
 name: Run tests on any Push event
-# Запуск при любом push евенте в любой ветке, за исключением релизных тэгов.
-# Они будт тестироваться перед сборкой
+
 on:
   push:
     tags:
@@ -8,6 +7,7 @@ on:
     branches:
       - '*'
 jobs:
+
   flake8-lint:
     runs-on: ubuntu-latest
     name: Lint
@@ -24,6 +24,7 @@ jobs:
           max-line-length: "120"
           path: "src"
           plugins: "flake8-bugbear==22.1.11 flake8-black"
+
   tests:
     runs-on: ubuntu-latest
     steps:
@@ -33,6 +34,7 @@ jobs:
       - run: uv sync
       - name: Run tests
         run: uv run pytest
+
   deploy:
     needs: [tests, flake8-lint]
     runs-on: ubuntu-latest
@@ -49,6 +51,9 @@ jobs:
           port: ${{ secrets.VPN_PORT }}
           script: | 
             cd /${{ secrets.VPN_USER_NAME }}/${{ secrets.PROJECT_PATH }}
+            touch .env
+            echo '' > .env
+            echo APP_BOT_TOKEN=${{ secrets.APP_BOT_TOKEN }} >> .env
             git checkout master
             git pull
             docker build . -t=form_wizard -f=docker/Dockerfile
