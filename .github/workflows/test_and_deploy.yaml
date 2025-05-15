@@ -33,8 +33,12 @@ jobs:
           password: ${{ secrets.VPN_PASSWORD }}
           port: ${{ secrets.VPN_PORT }}
           script: | 
-            pwd
-            ls -al
+            cd /${{ secrets.VPN_USER_NAME }}/${{ secrets.PROJECT_PATH }}
+            git checkout master
+            git pull
+            docker build . -t=form_wizard -f=docker/Dockerfile
+            docker rm form_wizard
+            docker run -d --env-file=.env --name form_wizard form_wizard
 #      - name: Run command on remote server
 #        uses: D3rHase/ssh-command-action@v0.2.2
 #        with:
