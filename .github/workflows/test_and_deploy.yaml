@@ -17,7 +17,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
       - run: uv sync
       - name: Run tests
-        run: pipenv run pytest
+        run: uv run pytest
   deploy:
     needs: tests
     runs-on: ubuntu-latest
