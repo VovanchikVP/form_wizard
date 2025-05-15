@@ -39,16 +39,4 @@ jobs:
             docker build . -t=form_wizard -f=docker/Dockerfile
             docker rm form_wizard
             docker run -d --env-file=.env --name form_wizard form_wizard
-#      - name: Run command on remote server
-#        uses: D3rHase/ssh-command-action@v0.2.2
-#        with:
-#          host: ${{secrets.SSH_HOST}}
-#          user: ${{secrets.SSH_USER}}
-#          private_key: ${{secrets.SSH_PRIVATE_KEY}}
-#          command: |
-#            cd ${{ secrets.PROJECT_FOLDER }};
-#            git checkout master;
-#            git pull;
-#            docker-compose --file docker-compose.prod.yml down;
-#            docker-compose --file docker-compose.prod.yml up -d;
-#            docker system prune --all --force;
+            docker system prune --all --force
