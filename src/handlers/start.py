@@ -13,7 +13,7 @@ start_router = Router()
 
 @start_router.message(CommandStart())
 async def cmd_start(message: Message):
-    await message.answer("Запуск сообщения по команде /start используя фильтр У нас получилось")
+    await message.answer("Запуск сообщения по команде /start")
 
 
 @start_router.message(Command("start_2"))
