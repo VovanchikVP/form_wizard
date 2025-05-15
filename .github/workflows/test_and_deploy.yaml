@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Install uv
         uses: astral-sh/setup-uv@v5
+      - run: uv sync
       - run: uv pip install flake8
       - run: uv pip install pylint
       - run: uv pip install mypy
