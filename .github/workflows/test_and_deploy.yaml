@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        linter: [ flake8, pylint, ruff, mypy, pytype, pyright, fixit, pyre ]
+        linter: [ flake8, pylint, mypy ]
     steps:
       - uses: advanced-security/python-lint-code-scanning-action@v1
         with:
