@@ -8,11 +8,19 @@ on:
     branches:
       - '*'
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        linter: [ flake8, pylint, ruff, mypy, pytype, pyright, fixit, pyre ]
+    steps:
+      - uses: advanced-security/python-lint-code-scanning-action@v1
+        with:
+          linter: ${{ matrix.linter }}
   tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      # Устанавливаем python нужной версии
       - name: Install uv
         uses: astral-sh/setup-uv@v5
       - run: uv sync
