@@ -30,10 +30,8 @@ async def cmd_start_3(message: Message):
     await message.answer("Запуск сообщения по команде /start_3 используя магический фильтр F.text!")
 
 
-@start_router.message()
+@start_router.message(F.voice is not None)
 async def get_audio_messages(message: Message):
-    if message.voice is None:
-        return None
     file_id = message.voice.file_id
     file_info = await bot.get_file(file_id)
     downloaded_file = await bot.download_file(file_info.file_path)
