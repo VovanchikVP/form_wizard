@@ -1,5 +1,3 @@
-import os
-
 from aiogram import (
     F,
     Router,
@@ -12,6 +10,7 @@ from aiogram.types import Message
 
 from src.audio_converter.converter import Converter
 from src.configs.log_config import logger
+from src.tg_bot.main import bot
 
 start_router = Router()
 
@@ -31,17 +30,21 @@ async def cmd_start_3(message: Message):
     await message.answer("Запуск сообщения по команде /start_3 используя магический фильтр F.text!")
 
 
-@start_router.message(content_types=["voice"])
+@start_router.message()
 async def get_audio_messages(message: Message):
-    downloaded_file = await message.voice.get_file()
-    file_name = str(message.message_id)
+    if message.voice is None:
+        return None
+    file_id = message.voice.file_id
+    file_info = await bot.get_file(file_id)
+    downloaded_file = await bot.download_file(file_info.file_path)
+    file_name = f"{message.message_id}.ogg"
     name = message.chat.first_name if message.chat.first_name else "No_name"
     logger.info(f"Chat {name} (ID: {message.chat.id}) download file {file_name}")
 
     with open(file_name, "wb") as new_file:
-        new_file.write(downloaded_file)
+        new_file.write(downloaded_file.read())
+
     converter = Converter(file_name)
-    os.remove(file_name)
     message_text = converter.audio_to_text()
     del converter
     await message.answer(message_text)
