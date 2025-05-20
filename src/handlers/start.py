@@ -1,3 +1,5 @@
+import os
+
 from aiogram import (
     F,
     Router,
@@ -7,6 +9,9 @@ from aiogram.filters import (
     CommandStart,
 )
 from aiogram.types import Message
+
+from src.audio_converter.converter import Converter
+from src.configs.log_config import logger
 
 start_router = Router()
 
@@ -24,3 +29,19 @@ async def cmd_start_2(message: Message):
 @start_router.message(F.text == "/start_3")
 async def cmd_start_3(message: Message):
     await message.answer("Запуск сообщения по команде /start_3 используя магический фильтр F.text!")
+
+
+@start_router.message(content_types=["voice"])
+async def get_audio_messages(message: Message):
+    downloaded_file = await message.voice.get_file()
+    file_name = str(message.message_id)
+    name = message.chat.first_name if message.chat.first_name else "No_name"
+    logger.info(f"Chat {name} (ID: {message.chat.id}) download file {file_name}")
+
+    with open(file_name, "wb") as new_file:
+        new_file.write(downloaded_file)
+    converter = Converter(file_name)
+    os.remove(file_name)
+    message_text = converter.audio_to_text()
+    del converter
+    await message.answer(message_text)

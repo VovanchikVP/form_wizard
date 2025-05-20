@@ -3,11 +3,12 @@ name = "form-wizard"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "aiogram>=3.20.0.post0",
     "pydantic>=2.11.4",
     "pydantic-settings>=2.9.1",
+    "speechrecognition>=3.14.3",
 ]
 
 [dependency-groups]
