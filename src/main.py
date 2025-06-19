@@ -22,7 +22,7 @@ class ThreadedEventLoop(threading.Thread):
 
 async def main():
     dp.include_router(start_router)
-    task_oauth = asyncio.create_task(OauthGIGAChat().run())
+    asyncio.create_task(OauthGIGAChat().run())
     await create_tables()
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)

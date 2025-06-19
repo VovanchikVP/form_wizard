@@ -11,10 +11,10 @@ CREATE TABLE IF NOT EXISTS templates (
 );
 
 CREATE TABLE IF NOT EXISTS arguments(
-  code     TEXT NOT NULL, 
-  description   TEXT NOT NULL, 
-  template_rowid INTEGER,
-  FOREIGN KEY(template_rowid) REFERENCES templates(rowid)
+    code TEXT NOT NULL,
+    description TEXT NOT NULL,
+    template_rowid INTEGER,
+    FOREIGN KEY(template_rowid) REFERENCES templates(rowid)
 );
 """
 
@@ -26,4 +26,4 @@ async def create_tables():
     cursor.executescript(TEMPLATE)
     cursor.close()
     connection.close()
-    logger.info(f"Creating tables completed")
+    logger.info("Creating tables completed")

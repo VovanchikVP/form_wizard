@@ -24,4 +24,4 @@ async def add_template(template: Function, user_id):
     conn.commit()
     cursor.close()
     conn.close()
-    logger.info(f"Insert completed")
+    logger.info("Insert completed")
