@@ -1,6 +1,7 @@
 from aiogram import (
     F,
     Router,
+    types,
 )
 from aiogram.filters import (
     Command,
@@ -8,9 +9,10 @@ from aiogram.filters import (
 )
 from aiogram.types import Message
 
-from src.audio_converter.converter import Converter
-from src.configs.log_config import logger
-from src.tg_bot.main import bot
+from src.handlers.services.initial_template_preparation import InitialTemplatePreparation
+from src.handlers.services.voice_to_text import VoiceToTextService
+
+# User(id=442054550, is_bot=False, first_name='Владимир', last_name=None, username='kapitonov_vp', language_code='ru', is_premium=None, added_to_attachment_menu=None, can_join_groups=None, can_read_all_group_messages=None, supports_inline_queries=None, can_connect_to_business=None, has_main_web_app=None)
 
 start_router = Router()
 
@@ -32,19 +34,9 @@ async def cmd_start_3(message: Message):
 
 @start_router.message()
 async def get_audio_messages(message: Message):
-    if message.voice is None:
-        return None
-    file_id = message.voice.file_id
-    file_info = await bot.get_file(file_id)
-    downloaded_file = await bot.download_file(file_info.file_path)
-    file_name = f"{message.message_id}.ogg"
-    name = message.chat.first_name if message.chat.first_name else "No_name"
-    logger.info(f"Chat {name} (ID: {message.chat.id}) download file {file_name}")
-
-    with open(file_name, "wb") as new_file:
-        new_file.write(downloaded_file.read())
-
-    converter = Converter(file_name)
-    message_text = converter.audio_to_text()
-    del converter
-    await message.answer(message_text)
+    if message.voice is not None:
+        message_text = await VoiceToTextService.parce_voice_message(message)
+        await message.answer(message_text)
+    elif message.content_type == types.ContentType.DOCUMENT:
+        message_text = await InitialTemplatePreparation.parce_document(message)
+        await message.answer(message_text)
