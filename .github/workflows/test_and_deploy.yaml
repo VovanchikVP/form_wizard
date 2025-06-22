@@ -52,9 +52,9 @@ jobs:
             echo APP_BOT_TOKEN=${{ secrets.APP_BOT_TOKEN }} >> .env
             echo APP_GIGA_OAUTH_URL=${{ secrets.APP_GIGA_OAUTH_URL }} >> .env
             echo APP_GIGA_CLIENT_ID=${{ secrets.APP_GIGA_CLIENT_ID }} >> .env
-            echo APP_GIGA_SCOPE=$APP_GIGA_SCOPE >> .env
+            echo APP_GIGA_SCOPE=${{ vars.APP_GIGA_SCOPE }} >> .env
             echo APP_GIGA_AUTHORIZATION_KEY=${{ secrets.APP_GIGA_AUTHORIZATION_KEY }} >> .env
-            echo APP_GIGA_REFRESH_TOKEN=$APP_GIGA_REFRESH_TOKEN >> .env
+            echo APP_GIGA_REFRESH_TOKEN=${{ vars.APP_GIGA_REFRESH_TOKEN }} >> .env
             echo APP_ALLOWED_USERS=${{ secrets.APP_ALLOWED_USERS }} >> .env
             git checkout master
             git pull
