@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     GIGA_AUTHORIZATION_KEY: str = os.environ.get("APP_GIGA_AUTHORIZATION_KEY", "")
     GIGA_OAUTH_URL: str = os.environ.get("APP_GIGA_OAUTH_URL", "")
     GIGA_REFRESH_TOKEN: int = os.environ.get("APP_GIGA_REFRESH_TOKEN", 1600)
+    ALLOWED_USERS: list[int] = os.environ.get("APP_ALLOWED_USERS").split(";")
 
 
 settings = Settings()
