@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import BaseModel
 
 
@@ -17,3 +19,14 @@ class Function(BaseModel):
     file_path: str
     description: str
     parameters: Parameters
+
+
+class RequestFunctionMessage(BaseModel):
+    role: Literal["assistant", "user"] = "user"
+    content: str  # "Запрос передаваемый в LLM"
+
+
+class RequestFunction(BaseModel):
+    model: str = ("GigaChat",)
+    messages: list[RequestFunctionMessage]
+    functions: list[Function]
