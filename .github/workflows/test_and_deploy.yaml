@@ -69,9 +69,6 @@ jobs:
             echo APP_GIGA_AUTHORIZATION_KEY=${{ secrets.APP_GIGA_AUTHORIZATION_KEY }} >> .env
             echo APP_GIGA_REFRESH_TOKEN=${{ vars.APP_GIGA_REFRESH_TOKEN }} >> .env
             echo APP_ALLOWED_USERS=${{ secrets.APP_ALLOWED_USERS }} >> .env
-#            git checkout master
-#            git pull
-#            docker build . -t=form_wizard -f=docker/Dockerfile
             docker pull kapitonovvp/form_wizard
             docker stop form_wizard
             docker rm form_wizard
