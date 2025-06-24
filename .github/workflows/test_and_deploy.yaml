@@ -31,8 +31,20 @@ jobs:
       - name: Run tests
         run: uv run pytest
 
-  deploy:
+  build:
     needs: [tests, flake8-lint]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@master
+      - name: Build the Docker image
+        run: docker build . --file docker/Dockerfile --tag kapitonovvp/form_wizard:latest
+      - name: Push docker image
+        run: |
+          docker push kapitonovvp/form_wizard:latest
+
+  deploy:
+    needs: [build]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
@@ -56,10 +68,8 @@ jobs:
             echo APP_GIGA_AUTHORIZATION_KEY=${{ secrets.APP_GIGA_AUTHORIZATION_KEY }} >> .env
             echo APP_GIGA_REFRESH_TOKEN=${{ vars.APP_GIGA_REFRESH_TOKEN }} >> .env
             echo APP_ALLOWED_USERS=${{ secrets.APP_ALLOWED_USERS }} >> .env
-            git checkout master
-            git pull
-            docker build . -t=form_wizard -f=docker/Dockerfile
+            docker pull kapitonovvp/form_wizard
             docker stop form_wizard
             docker rm form_wizard
-            docker run -d --env-file=.env --name form_wizard form_wizard
+            docker run -d --env-file=.env --name form_wizard kapitonovvp/form_wizard
             docker system prune --all --force
