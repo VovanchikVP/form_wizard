@@ -2,7 +2,7 @@ import sqlite3
 
 from src.configs.db import PATH_TO_DB
 from src.configs.log_config import logger
-from src.handlers.schems.functions import Function
+from src.schems.functions import Function
 
 
 async def add_template(template: Function, user_id):

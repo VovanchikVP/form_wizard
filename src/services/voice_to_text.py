@@ -1,8 +1,8 @@
 from aiogram.types import Message
 
-from src.audio_converter.converter import Converter
 from src.configs.log_config import logger
-from src.handlers.services.files import FilesService
+from src.services.audio_converter.converter import Converter
+from src.services.files import FilesService
 
 
 class VoiceToTextService:
