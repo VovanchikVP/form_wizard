@@ -10,9 +10,9 @@ from aiogram.filters import (
 from aiogram.types import Message
 
 from src.configs.config import settings
-from src.handlers.services.templates.initial_template_preparation import InitialTemplatePreparation
-from src.handlers.services.voice_to_text import VoiceToTextService
 from src.llm_agents.giga import GIGAChatService
+from src.services.templates.initial_template_preparation import InitialTemplatePreparation
+from src.services.voice_to_text import VoiceToTextService
 
 start_router = Router()
 

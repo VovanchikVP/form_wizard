@@ -14,18 +14,18 @@ from aiogram.types import (
 from src.configs.db import PATH_TO_FILES
 from src.configs.log_config import logger
 from src.database.add_template import add_template
-from src.handlers.schems.functions import (
+from src.schems.functions import (
     Argument,
     Function,
     Parameters,
 )
-from src.handlers.services.constants import (
+from src.services.constants import (
     REPLACE_LITERAL,
     SPLIT_LITERAL,
     TEMPLATE_CONSTANT,
     TEMPLATE_TITLE,
 )
-from src.handlers.services.files import FilesService
+from src.services.files import FilesService
 
 
 class InitialTemplatePreparation:
